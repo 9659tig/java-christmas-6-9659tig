@@ -1,6 +1,7 @@
 package christmas;
 
 import domain.Menu;
+import domain.Order;
 import view.InputView;
 
 import java.util.List;
@@ -13,6 +14,6 @@ public class Application {
         InputView inputView = new InputView();
         int date = inputView.readDate();
 
-        List<Menu> menus = inputView.readMenus();
+        Order order = inputView.readOrder();
     }
 }
