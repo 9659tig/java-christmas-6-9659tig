@@ -1,13 +1,9 @@
 package view;
-import camp.nextstep.edu.missionutils.Console;
-import domain.Menu;
-import domain.Order;
-import java.util.HashMap;
-import java.util.Map;
 
+import camp.nextstep.edu.missionutils.Console;
+import domain.Order;
 
 public class InputView {
-
     public int readDate() {
         System.out.println("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)");
         while(true){
@@ -21,7 +17,7 @@ public class InputView {
         }
     }
 
-    public static int validateDate(String input) {
+    private static int validateDate(String input) {
         try {
             int date = Integer.parseInt(input);
             if (date < 1 || date > 31) {

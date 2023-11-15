@@ -4,7 +4,9 @@ import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ApplicationTest extends NsTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
@@ -33,13 +35,32 @@ class ApplicationTest extends NsTest {
         });
     }
 
+    @DisplayName("날짜 범위 초과")
     @Test
-    void 날짜_예외_테스트() {
+    void readDate_dateType() {
         assertSimpleTest(() -> {
             runException("a");
             assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
         });
     }
+
+    @DisplayName("정상적인 날짜 입력")
+    @Test
+    void readDate_success() {
+        assertSimpleTest(() -> {
+            run("15", "티본스테이크-1");
+            assertThat(output()).contains("주문하실 메뉴를 메뉴와 개수를 알려 주세요.");
+        });
+    }
+
+    @DisplayName("날짜 범위 초과")
+    void readDate_limitDateRange() {
+        assertSimpleTest(() -> {
+            runException("32");
+            assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+        });
+    }
+
 
     @Test
     void 주문_예외_테스트() {
