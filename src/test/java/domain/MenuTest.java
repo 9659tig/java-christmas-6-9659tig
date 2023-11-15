@@ -11,14 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MenuTest {
     private Map<Menu, Integer> menus = new HashMap<>();
-    @BeforeEach
-    void setting(){
-        menus.clear();
-    }
 
     @DisplayName("메뉴최대개수제한")
     @Test
     void validateMenus_limitMaximum() {
+        menus.clear();
         menus.put(Menu.양송이수프, 1);
         menus.put(Menu.타파스, 1);
         menus.put(Menu.제로콜라, 19);
@@ -29,6 +26,7 @@ class MenuTest {
     @DisplayName("정상적인 메뉴 input")
     @Test
     void validateMenus_pass(){
+        menus.clear();
         menus.put(Menu.양송이수프, 1);
         menus.put(Menu.제로콜라, 1);
 
@@ -38,6 +36,7 @@ class MenuTest {
     @DisplayName("음료만주문불가")
     @Test
     void validateMenus_limitOnlyDrinks(){
+        menus.clear();
         menus.put(Menu.제로콜라, 1);
         menus.put(Menu.레드와인, 1);
 
