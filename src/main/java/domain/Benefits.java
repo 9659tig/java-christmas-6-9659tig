@@ -36,4 +36,9 @@ public class Benefits {
     public int getTotalBenefitsAmount() {
         return dDayDiscountAmount + dailyDiscountAmount + weekendDiscountAmount + specialDiscountAmount + giftAmount;
     }
+
+    public String getBadgeName() {
+        EventBadge badge = EventBadge.getBadge(getTotalBenefitsAmount());
+        return EventBadge.getNameOrEmpty(badge);
+    }
 }
