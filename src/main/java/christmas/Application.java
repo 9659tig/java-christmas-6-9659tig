@@ -13,5 +13,8 @@ public class Application {
 
         Benefits benefits = new Benefits(order);
         System.out.println("총 혜택 금액: " + benefits.getTotalBenefitsAmount());
+        String badgeName = benefits.getBadgeName();
+        System.out.println("<12월 이벤트 배지>");
+        System.out.println(badgeName);
     }
 }

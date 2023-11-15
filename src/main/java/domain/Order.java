@@ -73,8 +73,6 @@ public class Order {
 
     public int applyEventDiscount(int startDiscount, int increaseDiscount) {
         if (this.date <= CHRISTMAS_DAY) {
-            System.out.println("디데이할인");
-            System.out.println(startDiscount + (this.date - 1) * increaseDiscount);
             return startDiscount + (this.date - 1) * increaseDiscount;
         }
         return 0;
@@ -86,9 +84,6 @@ public class Order {
                     .filter(entry -> entry.getKey().isDessert())
                     .mapToInt(Map.Entry::getValue)
                     .sum();
-            System.out.println("평일할인");
-            System.out.println(dessertCount);
-            System.out.println(dailyDiscount * (int)dessertCount);
             return dailyDiscount * (int)dessertCount;
         }
         return 0;
@@ -100,18 +95,13 @@ public class Order {
                     .filter(entry -> entry.getKey().isMain())
                     .mapToInt(Map.Entry::getValue)
                     .sum();
-            System.out.println("주말할인");
-            System.out.println(weekendDiscount * (int)mainCount);
             return weekendDiscount * (int)mainCount;
         }
         return 0;
     }
 
     public int applySpecialDiscount(int specialDiscount) {
-        System.out.println(this.date);
         if (this.date == CHRISTMAS_DAY || this.date % WEEKS == SPECIALDAY) {
-            System.out.println("특별할인");
-            System.out.println(specialDiscount);
             return specialDiscount;
         }
         return 0;
