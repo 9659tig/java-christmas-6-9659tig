@@ -11,6 +11,7 @@ public class Order {
     private static final int SATURDAY = 2;
     private static final int SPECIALDAY = 3;
     private static final int MIN_AMOUNT_POSSIBLE_GIFT = 120000;
+    private static final int GIFT_AMOUNT = 25000;
 
     private final Map<Menu, Integer> menus;
     private final int totalAmount;
@@ -105,6 +106,21 @@ public class Order {
             return specialDiscount;
         }
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Menu, Integer> entry : menus.entrySet()) {
+            sb.append(entry.getKey().name()).append(" ").append(entry.getValue()).append("개\n");
+        }
+        sb.append("\n<할인 전 총주문 금액>\n");
+        sb.append(String.format("%,d", totalAmount)).append("원");
+        return sb.toString();
+    }
+
+    public int calculateFinalPayment(Benefits benefits) {
+        return totalAmount - benefits.getTotalBenefitsAmount();
     }
 
 }
