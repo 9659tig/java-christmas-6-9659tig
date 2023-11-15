@@ -37,8 +37,25 @@ public class Benefits {
         return dDayDiscountAmount + dailyDiscountAmount + weekendDiscountAmount + specialDiscountAmount + giftAmount;
     }
 
+    public int getTotalBenefitsAmountExceptGift() {
+        return dDayDiscountAmount + dailyDiscountAmount + weekendDiscountAmount + specialDiscountAmount;
+    }
+
     public String getBadgeName() {
         EventBadge badge = EventBadge.getBadge(getTotalBenefitsAmount());
         return EventBadge.getNameOrEmpty(badge);
+    }
+
+    @Override
+    public String toString() {
+        if (dDayDiscountAmount == 0 && dailyDiscountAmount == 0 && specialDiscountAmount == 0 && giftAmount == 0) {
+            return "없음\n";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("크리스마스 디데이 할인: -").append(String.format("%,d", dDayDiscountAmount)).append("원\n");
+        sb.append("평일 할인: -").append(String.format("%,d", dailyDiscountAmount)).append("원\n");
+        sb.append("특별 할인: -").append(String.format("%,d", specialDiscountAmount)).append("원\n");
+        sb.append("증정 이벤트: -").append(String.format("%,d", giftAmount)).append("원\n");
+        return sb.toString();
     }
 }
