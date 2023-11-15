@@ -58,4 +58,17 @@ public enum Menu {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 존재하지 않는 메뉴입니다."));
     }
+
+    public int calculateAmount(int count) {
+        return this.price * count;
+    }
+
+    public boolean isDessert() {
+        return "디저트".equals(this.type);
+    }
+
+    public boolean isMain() {
+        return "메인".equals(this.type);
+    }
+
 }

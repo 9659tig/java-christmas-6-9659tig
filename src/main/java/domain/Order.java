@@ -4,18 +4,42 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
-    private static final int MAX_MENU_COUNT = 20;
+    private static final int MIN_EVENT_AMOUNT = 10000;
+    private static final int CHRISTMAS_DAY = 25;
+    private static final int WEEKS = 7;
+    private static final int FRIDAY = 1;
+    private static final int SATURDAY = 2;
+    private static final int SPECIALDAY = 3;
+    private static final int MIN_AMOUNT_POSSIBLE_GIFT = 120000;
 
     private final Map<Menu, Integer> menus;
+    private final int totalAmount;
+    private final int date;
 
-    public Order(Map<Menu, Integer> menus) {
+    public Order(Map<Menu, Integer> menus, int date) {
         Menu.validateMenus(menus);
         this.menus = new HashMap<>(menus);
+        this.totalAmount = calculateTotalAmount();
+        this.date = date;
     }
 
-    public static Order createOrder(String customerInput) {
+    public boolean isPossibleGift() {
+        return this.totalAmount >= MIN_AMOUNT_POSSIBLE_GIFT;
+    }
+
+    public boolean isTotalAmountOver() {
+        return this.totalAmount >= MIN_EVENT_AMOUNT;
+    }
+
+    private int calculateTotalAmount() {
+        return menus.entrySet().stream()
+                .mapToInt(entry -> entry.getKey().calculateAmount(entry.getValue()))
+                .sum();
+    }
+
+    public static Order createOrder(String customerInput, int date) {
         Map<Menu, Integer> customerMenus = createMenus(customerInput);
-        return new Order(customerMenus);
+        return new Order(customerMenus, date);
     }
 
     private static Map<Menu, Integer> createMenus(String input) {
@@ -45,6 +69,52 @@ public class Order {
         if (menus.containsKey(menu)) {
             throw new IllegalArgumentException("[ERROR] 중복된 메뉴가 있습니다. 다시 입력해 주세요.");
         }
+    }
+
+    public int applyEventDiscount(int startDiscount, int increaseDiscount) {
+        if (this.date <= CHRISTMAS_DAY) {
+            System.out.println("디데이할인");
+            System.out.println(startDiscount + (this.date - 1) * increaseDiscount);
+            return startDiscount + (this.date - 1) * increaseDiscount;
+        }
+        return 0;
+    }
+
+    public int applyDailyDiscount(int dailyDiscount) {
+        if (this.date % WEEKS != FRIDAY && this.date % WEEKS != SATURDAY) {
+            int dessertCount = this.menus.entrySet().stream()
+                    .filter(entry -> entry.getKey().isDessert())
+                    .mapToInt(Map.Entry::getValue)
+                    .sum();
+            System.out.println("평일할인");
+            System.out.println(dessertCount);
+            System.out.println(dailyDiscount * (int)dessertCount);
+            return dailyDiscount * (int)dessertCount;
+        }
+        return 0;
+    }
+
+    public int applyWeekendDiscount(int weekendDiscount) {
+        if (this.date % WEEKS == FRIDAY || this.date % WEEKS == SATURDAY) {
+            long mainCount = this.menus.entrySet().stream()
+                    .filter(entry -> entry.getKey().isMain())
+                    .mapToInt(Map.Entry::getValue)
+                    .sum();
+            System.out.println("주말할인");
+            System.out.println(weekendDiscount * (int)mainCount);
+            return weekendDiscount * (int)mainCount;
+        }
+        return 0;
+    }
+
+    public int applySpecialDiscount(int specialDiscount) {
+        System.out.println(this.date);
+        if (this.date == CHRISTMAS_DAY || this.date % WEEKS == SPECIALDAY) {
+            System.out.println("특별할인");
+            System.out.println(specialDiscount);
+            return specialDiscount;
+        }
+        return 0;
     }
 
 }
