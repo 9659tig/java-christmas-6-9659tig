@@ -58,7 +58,7 @@ public class InputView {
             String[] parsedMenu = menu.split("-");
             validOrderForm(parsedMenu);
 
-            Menu customerMenu = Menu.of(parsedMenu[0]);
+            Menu customerMenu = Menu.isExistAndReturnMenu(parsedMenu[0]);
             validOrderDuplicate(customerMenus, customerMenu);
 
             int menuCnt = Menu.validateAndReturnMenuCount(parsedMenu[1]);

@@ -52,7 +52,7 @@ public enum Menu {
         }
     }
 
-    public static Menu of(String name) {
+    public static Menu isExistAndReturnMenu(String name) {
         return Arrays.stream(Menu.values())
                 .filter(menu -> menu.name().equals(name))
                 .findFirst()
