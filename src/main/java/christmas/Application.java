@@ -1,19 +1,17 @@
 package christmas;
 
-import domain.Menu;
-import domain.Order;
+import domain.*;
 import view.InputView;
-
-import java.util.List;
 
 
 public class Application {
     public static void main(String[] args) {
-        System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
-
         InputView inputView = new InputView();
-        int date = inputView.readDate();
 
-        Order order = inputView.readOrder();
+        int date = inputView.readDate();
+        Order order = inputView.readOrder(date);
+
+        Benefits benefits = new Benefits(order);
+        System.out.println("총 혜택 금액: " + benefits.getTotalBenefitsAmount());
     }
 }
